@@ -17,3 +17,5 @@
 - [bootloader書き込み済みのATMEGA(3v3, INT8MHz)](https://akizukidenshi.com/catalog/g/gI-12775/)
 - [bootloader書き込み済みのATMEGA(5v, EXT16MHz)](https://akizukidenshi.com/catalog/g/gI-12774/)
 - [16MHzセラミック発振子](https://akizukidenshi.com/catalog/g/gP-09576/) (負荷容量付き)
+- [12vスイッチングACアダプタ](https://akizukidenshi.com/catalog/g/gM-01804/)
+- [2.1mm標準DCジャック](https://akizukidenshi.com/catalog/g/gC-09408/)
