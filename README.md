@@ -4,6 +4,7 @@
 
 
 ## CIRCUIT DIAGRAM
+[pdf](kicad/suyasuya_clock/suyasuya_clock.pdf)
 ![](kicad/suyasuya_clock/suyasuya_clock.svg)
 
 ## 購入品リスト
