@@ -7,6 +7,13 @@
 [pdf](kicad/suyasuya_clock/suyasuya_clock.pdf)
 ![](kicad/suyasuya_clock/suyasuya_clock.svg)
 
+## Artwork
+### top
+![top](img/artwork_top.png)
+
+### bottom
+![bottom](img/artwork_bottom.png)
+
 ## 購入品リスト
 
 - [usbコネクタdip化基板](https://akizukidenshi.com/catalog/g/gK-07429/)
