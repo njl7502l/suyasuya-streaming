@@ -3,7 +3,7 @@
 #include <TinyGPS.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial SerialGPS = SoftwareSerial(2, 3);
+SoftwareSerial SerialGPS = SoftwareSerial(2, 3); // rx, tx
 TinyGPS gps; 
 
 const int offset = 9;
@@ -14,8 +14,8 @@ void setup() {
   Serial.println("Waiting for GPS time ... ");
   getTimeFromGPS();
 
-  Alarm.alarmRepeat(10, 56, 0, Alarm);
-  Alarm.timerRepeat(5, digitalClockDisplay);
+  Alarm.alarmRepeat(12, 2, 0, customAlarm);
+  Alarm.timerRepeat(5, TimerRepeat);
 }
 
 void loop() {
@@ -45,18 +45,26 @@ void getTimeFromGPS() {
   }
 }
 
-// Timer Actions
-void Alarm() {
+// Alarm Action
+void customAlarm() {
   Serial.print("Alarm:\t");
   digitalClockDisplay();
   Alarm.timerOnce(60, OnceTimer);
 }
 
+// Alarm Destructor
 void OnceTimer() {
   Serial.print("OnceTimer:\t");
   digitalClockDisplay();
 }
 
+// Timer Action
+void TimerRepeat(){
+  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  digitalClockDisplay();
+}
+
+// time writer
 void digitalClockDisplay() {
   Serial.print(hour());
   printDigits(minute());
