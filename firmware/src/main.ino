@@ -9,12 +9,15 @@ TinyGPS gps;
 const int offset = 9;
 
 void setup() {
+  pinMode(8, OUTPUT);
+  digitalWrite(8, LOW);
+
   Serial.begin(9600);
   SerialGPS.begin(9600);
   Serial.println("Waiting for GPS time ... ");
   getTimeFromGPS();
 
-  Alarm.alarmRepeat(12, 2, 0, customAlarm);
+  Alarm.alarmRepeat(14, 57, 0, customAlarm);
   Alarm.timerRepeat(5, TimerRepeat);
 }
 
@@ -49,6 +52,7 @@ void getTimeFromGPS() {
 void customAlarm() {
   Serial.print("Alarm:\t");
   digitalClockDisplay();
+  digitalWrite(8, HIGH);
   Alarm.timerOnce(60, OnceTimer);
 }
 
@@ -56,6 +60,7 @@ void customAlarm() {
 void OnceTimer() {
   Serial.print("OnceTimer:\t");
   digitalClockDisplay();
+  digitalWrite(8, LOW);
 }
 
 // Timer Action
