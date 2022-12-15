@@ -7,22 +7,37 @@ SoftwareSerial SerialGPS = SoftwareSerial(2, 3); // rx, tx
 TinyGPS gps; 
 
 const int offset = 9;
+const int trig_pin = 9;
+const int led_pin = 13;
+const int switch_pin = 8;
+
+volatile bool is_cancel = false;
 
 void setup() {
-  pinMode(8, OUTPUT);
-  digitalWrite(8, LOW);
+  pinMode(trig_pin, OUTPUT);
+  digitalWrite(trig_pin, LOW);
+  pinMode(led_pin, OUTPUT);
+  digitalWrite(led_pin, LOW);
+  pinMode(switch_pin, INPUT_PULLUP);
 
   Serial.begin(9600);
   SerialGPS.begin(9600);
   Serial.println("Waiting for GPS time ... ");
   getTimeFromGPS();
 
-  Alarm.alarmRepeat(14, 57, 0, customAlarm);
+  Alarm.alarmRepeat(9, 25, 0, customAlarm);
   Alarm.timerRepeat(5, TimerRepeat);
 }
 
 void loop() {
-  Alarm.delay(1000);
+  for(int i=0 ; i<10 ; i++){
+    Alarm.delay(100);
+    if (digitalRead(switch_pin) == LOW){
+      is_cancel = true;
+      digitalWrite(trig_pin, LOW);
+    }
+    digitalWrite(led_pin, !is_cancel);
+  }
   getTimeFromGPS();
 }
 
@@ -51,21 +66,25 @@ void getTimeFromGPS() {
 // Alarm Action
 void customAlarm() {
   Serial.print("Alarm:\t");
+  if (is_cancel){
+    Serial.println("cancelled");
+    is_cancel = false;
+    return;
+  }
   digitalClockDisplay();
-  digitalWrite(8, HIGH);
-  Alarm.timerOnce(60, OnceTimer);
+  digitalWrite(trig_pin, HIGH);
+  Alarm.timerOnce(600, OnceTimer);
 }
 
 // Alarm Destructor
 void OnceTimer() {
   Serial.print("OnceTimer:\t");
   digitalClockDisplay();
-  digitalWrite(8, LOW);
+  digitalWrite(trig_pin, LOW);
 }
 
 // Timer Action
 void TimerRepeat(){
-  digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   digitalClockDisplay();
 }
 
